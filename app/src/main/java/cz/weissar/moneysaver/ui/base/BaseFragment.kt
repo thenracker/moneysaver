@@ -2,6 +2,7 @@ package cz.weissar.moneysaver.ui.base
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.annotation.MenuRes
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ abstract class BaseFragment : Fragment() {
     @LayoutRes
     abstract fun getLayoutResId() : kotlin.Int
 
+    @MenuRes
     fun getMenuResId() : kotlin.Int {
         return 0
     }
