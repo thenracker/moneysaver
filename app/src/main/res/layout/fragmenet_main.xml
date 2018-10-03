@@ -6,7 +6,7 @@
     android:padding="12dp">
 
     <EditText
-        android:id="@+id/noteEditExt"
+        android:id="@+id/noteEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -29,7 +29,7 @@
 
 
         <EditText
-            android:id="@+id/ammountEditText"
+            android:id="@+id/amountEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

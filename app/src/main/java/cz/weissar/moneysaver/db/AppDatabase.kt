@@ -8,4 +8,5 @@ object AppDatabase {
     const val NAME: String = "MoneySaverDB" //AppDatabase::class.simpleName.toString()
     const val VERSION: Int = 1
 
+    // TODO naučit se psát migrace
 }

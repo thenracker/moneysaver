@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import cz.weissar.moneysaver.R
 import cz.weissar.moneysaver.db.Item
 import cz.weissar.moneysaver.db.ItemDao
@@ -40,6 +41,15 @@ class MainFragment : BaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
+        saveButton.setOnClickListener {
+            if (!amountEditText.text.isEmpty()) {
+                val item = Item(noteEditText.text.toString(), amountEditText.text.toString().toInt())
+                ItemDao.createOrUpdate(item)
+                items.add(item)
+                recyclerView.adapter.notifyItemInserted(items.size - 1)
+            }
+        }
+
     }
 
     inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -62,10 +72,12 @@ class MainFragment : BaseFragment() {
             val textView: TextView = view.findViewById(R.id.textView)
 
             init {
+                view.setOnClickListener(this)
                 view.setOnLongClickListener(this)
             }
 
             override fun onClick(p0: View?) {
+                Toast.makeText(context, items[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onLongClick(p0: View?): Boolean {
