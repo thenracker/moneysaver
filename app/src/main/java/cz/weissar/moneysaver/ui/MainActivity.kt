@@ -24,6 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
+        initItems()
+    }
+
+    private fun initItems() {
+
+        items = ItemDao.getAll()
+        val adapter = Adapter()
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
     }
 
     fun sayHello(view: View) {
@@ -38,18 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         ItemDao.createOrUpdate(i)
 
-        //val intent = Intent(this, MainActivity::class.java)
-        //startActivity(intent)
+        items.add(i)
 
-        items = ItemDao.getAll()
-        /*items.forEach {
-            System.out.println(it.name)
-        }*/
-
-        val adapter = Adapter()
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-        //adapter.notifyDataSetChanged()
+        recyclerView.adapter.notifyDataSetChanged()
     }
 
     inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
