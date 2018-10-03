@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
 
-    <!-- todo tlačítka a edit texty -->
+    <EditText
+        android:id="@+id/noteEditExt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:hint="@string/add_note"
+        android:inputType="textCapSentences" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/baseline_add_circle_24px"
+            android:tint="@color/colorPrimary" />
+
+
+        <EditText
+            android:id="@+id/ammountEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/amount"
+            android:inputType="number" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/baseline_remove_circle_24px"
+            android:tint="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="@string/save" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
