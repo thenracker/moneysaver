@@ -2,33 +2,29 @@ package cz.weissar.moneysaver.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import cz.weissar.moneysaver.R
-import cz.weissar.moneysaver.db.Item
-import cz.weissar.moneysaver.db.ItemDao
-import kotlinx.android.synthetic.main.activity_main.*
+import cz.weissar.moneysaver.ui.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
     //private lateinit var recycler: RecyclerView
-    private lateinit var items: MutableList<Item>
+    //private lateinit var items: MutableList<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //recycler = recyclerView
-        helloTextView.text = "Klikni na mě"
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.container, MainFragment.newInstance()).commitAllowingStateLoss()
+        }
 
-        initItems()
+        //recycler = recyclerView
+        //helloTextView.text = "Klikni na mě"
+
+        //initItems()
     }
 
+    /*
     private fun initItems() {
 
         items = ItemDao.getAll()
@@ -54,7 +50,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter.notifyDataSetChanged()
     }
+    */
 
+    /*
     inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -88,4 +86,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    */
 }
