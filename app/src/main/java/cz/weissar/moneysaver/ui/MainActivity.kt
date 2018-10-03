@@ -12,17 +12,19 @@ import android.widget.Toast
 import cz.weissar.moneysaver.R
 import cz.weissar.moneysaver.db.Item
 import cz.weissar.moneysaver.db.ItemDao
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
+    //private lateinit var recycler: RecyclerView
     private lateinit var items: MutableList<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.recyclerView)
+        //recycler = recyclerView
+        helloTextView.text = "Klikni na mě"
 
         initItems()
     }
