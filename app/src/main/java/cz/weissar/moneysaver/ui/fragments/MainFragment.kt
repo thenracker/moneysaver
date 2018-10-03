@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import cz.weissar.moneysaver.R
-import cz.weissar.moneysaver.db.Item
-import cz.weissar.moneysaver.db.ItemDao
+import cz.weissar.moneysaver.db.ItemEntity
+import cz.weissar.moneysaver.db.ItemDaoImpl
 import cz.weissar.moneysaver.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragmenet_main.*
+import java.util.*
 
 class MainFragment : BaseFragment() {
 
-    private lateinit var items: MutableList<Item>
+    private lateinit var itemEntities: MutableList<ItemEntity>
 
     companion object { //static methods
 
@@ -35,18 +36,18 @@ class MainFragment : BaseFragment() {
     }
 
     private fun initItems() {
-
-        items = ItemDao.getAll()
+        //TODO rewerite for interface
+        itemEntities = ItemDaoImpl.getAll()
         val adapter = Adapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
         saveButton.setOnClickListener {
             if (!amountEditText.text.isEmpty()) {
-                val item = Item(noteEditText.text.toString(), amountEditText.text.toString().toInt())
-                ItemDao.createOrUpdate(item)
-                items.add(item)
-                recyclerView.adapter.notifyItemInserted(items.size - 1)
+                val item = ItemEntity(noteEditText.text.toString(), amountEditText.text.toString().toInt(), Currency.getInstance("CZK"))
+                ItemDaoImpl.createOrUpdate(item)
+                itemEntities.add(item)
+                recyclerView.adapter.notifyItemInserted(itemEntities.size - 1)
             }
         }
 
@@ -60,11 +61,11 @@ class MainFragment : BaseFragment() {
         }
 
         override fun getItemCount(): Int {
-            return items.size
+            return itemEntities.size
         }
 
         override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
-            holder.textView.text = items[position].name
+            holder.textView.text = itemEntities[position].name
         }
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
@@ -77,11 +78,11 @@ class MainFragment : BaseFragment() {
             }
 
             override fun onClick(p0: View?) {
-                Toast.makeText(context, items[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, itemEntities[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onLongClick(p0: View?): Boolean {
-                items.removeAt(layoutPosition).delete()
+                itemEntities.removeAt(layoutPosition).delete()
                 notifyDataSetChanged()
                 return true
             }
