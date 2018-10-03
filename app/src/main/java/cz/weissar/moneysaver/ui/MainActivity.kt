@@ -70,9 +70,22 @@ class MainActivity : AppCompatActivity() {
             holder.textView.text = items[position].name
         }
 
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
+
             val textView: TextView = view.findViewById(R.id.textView)
 
+            init {
+                view.setOnLongClickListener(this)
+            }
+
+            override fun onClick(p0: View?) {
+            }
+
+            override fun onLongClick(p0: View?): Boolean {
+                items.removeAt(layoutPosition).delete()
+                notifyDataSetChanged()
+                return true
+            }
         }
     }
 }
