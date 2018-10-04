@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import cz.weissar.moneysaver.R
-import cz.weissar.moneysaver.db.model.ItemEntity
 import cz.weissar.moneysaver.db.dao.ItemEntityDao
+import cz.weissar.moneysaver.db.model.ItemEntity
 import cz.weissar.moneysaver.ui.base.BaseFragment
+import cz.weissar.moneysaver.ui.base.BaseListCallback
 import kotlinx.android.synthetic.main.fragmenet_main.*
 import java.util.*
 
@@ -49,6 +50,14 @@ class MainFragment : BaseFragment() {
                 recyclerView.adapter.notifyItemInserted(itemEntities.size - 1)
             }
         }
+
+
+        ItemEntityDao.getAllAsync(object : BaseListCallback<ItemEntity> {
+            override fun onLoaded(list: MutableList<ItemEntity>) {
+                // <3 a není třeba řešit transaction
+            }
+        }
+        )
 
     }
 

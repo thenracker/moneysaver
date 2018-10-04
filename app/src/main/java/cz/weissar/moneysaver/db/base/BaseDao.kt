@@ -1,6 +1,7 @@
 package cz.weissar.moneysaver.db.base
 
 import com.raizlabs.android.dbflow.sql.language.Select
+import com.raizlabs.android.dbflow.sql.language.property.Property
 
 abstract class BaseDao<T : BaseDBModel> {
 
@@ -8,8 +9,12 @@ abstract class BaseDao<T : BaseDBModel> {
         item.save()
     }
 
-    fun delete(item : T){
+    fun delete(item: T) {
         item.delete()
+    }
+
+    inline fun <reified T : BaseDBModel> selectById(id: kotlin.Int, property: Property<Int>): T? {
+        return Select().from(T::class.java).where(property.eq(id)).querySingle()
     }
 
     /* .. no tak můj nápad s generickým BaseDao v Kotlinu úplně nejede kurva! .. tak aspoň ten createOrUpdate tu je
