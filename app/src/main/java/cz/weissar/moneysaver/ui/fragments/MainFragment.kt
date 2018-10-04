@@ -18,8 +18,6 @@ import java.util.*
 
 class MainFragment : BaseFragment() {
 
-    private lateinit var itemEntities: MutableList<ItemEntity>
-
     companion object { //static methods
 
         fun newInstance(): MainFragment {
@@ -39,7 +37,7 @@ class MainFragment : BaseFragment() {
     private fun initItems() {
 
         // asynchronní načítání <3
-        ItemEntityDao.getAllAsync(object : BaseListCallback<ItemEntity> {
+        ItemEntityDao.selectAllAsync(object : BaseListCallback<ItemEntity> {
             override fun onLoaded(list: MutableList<ItemEntity>) {
                 initAdapter(list)
             }
@@ -49,9 +47,7 @@ class MainFragment : BaseFragment() {
 
     private fun initAdapter(list : MutableList<ItemEntity>){
 
-        itemEntities = list
-
-        val adapter = Adapter()
+        val adapter = Adapter(list)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
@@ -59,13 +55,15 @@ class MainFragment : BaseFragment() {
             if (!amountEditText.text.isEmpty()) {
                 val item = ItemEntity(noteEditText.text.toString(), amountEditText.text.toString().toInt(), Currency.getInstance("CZK"))
                 ItemEntityDao.createOrUpdate(item)
-                itemEntities.add(item)
-                recyclerView.adapter.notifyItemInserted(itemEntities.size - 1)
+                adapter.itemEntities.add(item)
+                recyclerView.adapter.notifyItemInserted(adapter.itemEntities.size - 1)
             }
         }
     }
 
-    inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
+    inner class Adapter(itemEntities: MutableList<ItemEntity>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+
+        var itemEntities: MutableList<ItemEntity> = itemEntities
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             var view = LayoutInflater.from(this@MainFragment.context).inflate(R.layout.row_simple, parent, false)
@@ -89,11 +87,11 @@ class MainFragment : BaseFragment() {
                 view.setOnLongClickListener(this)
             }
 
-            override fun onClick(p0: View?) {
+            override fun onClick(view: View?) {
                 Toast.makeText(context, itemEntities[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
             }
 
-            override fun onLongClick(p0: View?): Boolean {
+            override fun onLongClick(view: View?): Boolean {
                 ItemEntityDao.delete(itemEntities.removeAt(layoutPosition))
                 notifyDataSetChanged()
                 return true
