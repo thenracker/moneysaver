@@ -32,7 +32,8 @@ class ItemEntity() : BaseDBModel() { // nutno ItemEntity() .. aby byl defaultní
     }
 
     // pro selectById
-    override var getPrimaryKeyId: Int = id
+    //override var getPrimaryKeyId: Int = id
 
     //override var getPrimaryKeyProperty: Property<Int> = ItemEntity_Table.id
+
 }
