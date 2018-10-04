@@ -7,6 +7,8 @@ import cz.weissar.moneysaver.ui.base.BaseSingleCallback
 
 abstract class BaseDao<T : BaseDBModel> {
 
+    // know how - takové metody s infline reified nelze vyolat z javy
+
     fun createOrUpdate(item: T) =
             item.save()
 
