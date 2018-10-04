@@ -1,8 +1,13 @@
 package cz.weissar.moneysaver.db.base
 
+import com.raizlabs.android.dbflow.sql.language.property.Property
 import com.raizlabs.android.dbflow.structure.BaseModel
 
 abstract class BaseDBModel : BaseModel() {
 
-    abstract fun getPrimaryKeyId() : kotlin.Int
+    // pro metody selectById
+    abstract var getPrimaryKeyId: Int
+
+    //abstract var getPrimaryKeyProperty: Property<Int>
+
 }

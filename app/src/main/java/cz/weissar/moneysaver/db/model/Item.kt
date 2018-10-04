@@ -3,6 +3,7 @@ package cz.weissar.moneysaver.db.model
 import java.io.Serializable
 import java.util.*
 
+@Deprecated("Nahrazeno ItemEntity", ReplaceWith("ItemEntity"))
 class Item : Serializable {
 
     var id: Int = 0

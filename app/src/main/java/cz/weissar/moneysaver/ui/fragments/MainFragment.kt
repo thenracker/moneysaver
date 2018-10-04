@@ -37,7 +37,20 @@ class MainFragment : BaseFragment() {
     }
 
     private fun initItems() {
-        itemEntities = ItemEntityDao.getAll()
+
+        // asynchronní načítání <3
+        ItemEntityDao.getAllAsync(object : BaseListCallback<ItemEntity> {
+            override fun onLoaded(list: MutableList<ItemEntity>) {
+                initAdapter(list)
+            }
+        })
+
+    }
+
+    private fun initAdapter(list : MutableList<ItemEntity>){
+
+        itemEntities = list
+
         val adapter = Adapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -50,15 +63,6 @@ class MainFragment : BaseFragment() {
                 recyclerView.adapter.notifyItemInserted(itemEntities.size - 1)
             }
         }
-
-
-        ItemEntityDao.getAllAsync(object : BaseListCallback<ItemEntity> {
-            override fun onLoaded(list: MutableList<ItemEntity>) {
-                // <3 a není třeba řešit transaction
-            }
-        }
-        )
-
     }
 
     inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
