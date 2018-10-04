@@ -19,7 +19,6 @@ import java.util.*
 class MainFragment : BaseFragment() {
 
     companion object { //static methods
-
         fun newInstance(): MainFragment {
             return MainFragment()
         }
@@ -45,7 +44,7 @@ class MainFragment : BaseFragment() {
 
     }
 
-    private fun initAdapter(list : MutableList<ItemEntity>){
+    private fun initAdapter(list: MutableList<ItemEntity>) {
 
         val adapter = Adapter(list)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -54,25 +53,20 @@ class MainFragment : BaseFragment() {
         saveButton.setOnClickListener {
             if (!amountEditText.text.isEmpty()) {
                 val item = ItemEntity(noteEditText.text.toString(), amountEditText.text.toString().toInt(), Currency.getInstance("CZK"))
-                ItemEntityDao.createOrUpdate(item)
+                ItemEntityDao.createOrUpdateAsync(item)
                 adapter.itemEntities.add(item)
                 recyclerView.adapter.notifyItemInserted(adapter.itemEntities.size - 1)
             }
         }
     }
 
-    inner class Adapter(itemEntities: MutableList<ItemEntity>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+    inner class Adapter(var itemEntities: MutableList<ItemEntity>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
-        var itemEntities: MutableList<ItemEntity> = itemEntities
+        //var itemEntities: MutableList<ItemEntity> = itemEntities //není třeba, když jsme do konstruktoru dali var
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            var view = LayoutInflater.from(this@MainFragment.context).inflate(R.layout.row_simple, parent, false)
-            return ViewHolder(view)
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(this@MainFragment.context).inflate(R.layout.row_simple, parent, false))
 
-        override fun getItemCount(): Int {
-            return itemEntities.size
-        }
+        override fun getItemCount(): Int = itemEntities.size
 
         override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
             holder.textView.text = itemEntities[position].name
@@ -92,7 +86,7 @@ class MainFragment : BaseFragment() {
             }
 
             override fun onLongClick(view: View?): Boolean {
-                ItemEntityDao.delete(itemEntities.removeAt(layoutPosition))
+                ItemEntityDao.deleteAsync(itemEntities.removeAt(layoutPosition))
                 notifyDataSetChanged()
                 return true
             }

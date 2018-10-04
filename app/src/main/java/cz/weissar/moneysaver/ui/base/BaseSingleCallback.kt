@@ -11,8 +11,6 @@ interface BaseSingleCallback<T> {
         query.querySingleResultCallback(transaction()).execute()
     }
 
-    private fun transaction(): QueryTransaction.QueryResultSingleCallback<T> {
-        return QueryTransaction.QueryResultSingleCallback { _, tResult -> onLoaded(tResult) } // _ = transaction
-    }
+    private fun transaction(): QueryTransaction.QueryResultSingleCallback<T> = QueryTransaction.QueryResultSingleCallback { _, tResult -> onLoaded(tResult) } // _ = transaction
 
 }
