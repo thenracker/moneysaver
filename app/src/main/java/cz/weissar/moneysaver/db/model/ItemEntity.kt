@@ -1,13 +1,15 @@
-package cz.weissar.moneysaver.db
+package cz.weissar.moneysaver.db.model
 
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
-import com.raizlabs.android.dbflow.structure.BaseModel
+import cz.weissar.moneysaver.db.AppDatabase
+import cz.weissar.moneysaver.db.base.BaseDBModel
+import cz.weissar.moneysaver.db.converter.CurrencyTypeConverter
 import java.util.*
 
 @Table(database = AppDatabase::class)
-class ItemEntity() : BaseModel() { // nutno ItemEntity() .. aby byl defaultní konsturktor prázdný
+class ItemEntity() : BaseDBModel() { // nutno ItemEntity() .. aby byl defaultní konsturktor prázdný
 
     @PrimaryKey(autoincrement = true)
     var id: Int = 0
@@ -26,5 +28,9 @@ class ItemEntity() : BaseModel() { // nutno ItemEntity() .. aby byl defaultní k
         this.name = name
         this.amount = amount
         this.currency = currency
+    }
+
+    override fun getPrimaryKeyId(): Int {
+        return id
     }
 }

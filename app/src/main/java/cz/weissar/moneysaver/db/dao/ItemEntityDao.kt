@@ -1,15 +1,16 @@
-package cz.weissar.moneysaver.db
+package cz.weissar.moneysaver.db.dao
 
 import com.raizlabs.android.dbflow.sql.language.Select
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction
+import cz.weissar.moneysaver.db.base.BaseDao
+import cz.weissar.moneysaver.db.model.ItemEntity
+import cz.weissar.moneysaver.db.model.ItemEntity_Table
 
-object ItemDaoImpl : ItemDao {
+object ItemEntityDao : BaseDao<ItemEntity>() {
 
-    override fun createOrUpdate(itemEntity: ItemEntity){
-        itemEntity.save()
-    }
+    // není třeba už create or update :)
 
-    override fun getAll(): MutableList<ItemEntity> {
+    fun getAll(): MutableList<ItemEntity> {
         return Select()
                 .from(ItemEntity::class.java)
                 .where()

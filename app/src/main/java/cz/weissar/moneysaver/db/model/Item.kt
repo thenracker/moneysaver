@@ -1,4 +1,4 @@
-package cz.weissar.moneysaver.model
+package cz.weissar.moneysaver.db.model
 
 import java.io.Serializable
 import java.util.*

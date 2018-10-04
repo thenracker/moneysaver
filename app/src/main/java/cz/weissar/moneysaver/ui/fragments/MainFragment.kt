@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import cz.weissar.moneysaver.R
-import cz.weissar.moneysaver.db.ItemEntity
-import cz.weissar.moneysaver.db.ItemDaoImpl
+import cz.weissar.moneysaver.db.model.ItemEntity
+import cz.weissar.moneysaver.db.dao.ItemEntityDao
 import cz.weissar.moneysaver.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragmenet_main.*
 import java.util.*
@@ -36,8 +36,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun initItems() {
-        //TODO rewerite for interface
-        itemEntities = ItemDaoImpl.getAll()
+        itemEntities = ItemEntityDao.getAll()
         val adapter = Adapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -45,7 +44,7 @@ class MainFragment : BaseFragment() {
         saveButton.setOnClickListener {
             if (!amountEditText.text.isEmpty()) {
                 val item = ItemEntity(noteEditText.text.toString(), amountEditText.text.toString().toInt(), Currency.getInstance("CZK"))
-                ItemDaoImpl.createOrUpdate(item)
+                ItemEntityDao.createOrUpdate(item)
                 itemEntities.add(item)
                 recyclerView.adapter.notifyItemInserted(itemEntities.size - 1)
             }
@@ -82,7 +81,7 @@ class MainFragment : BaseFragment() {
             }
 
             override fun onLongClick(p0: View?): Boolean {
-                itemEntities.removeAt(layoutPosition).delete()
+                ItemEntityDao.delete(itemEntities.removeAt(layoutPosition))
                 notifyDataSetChanged()
                 return true
             }

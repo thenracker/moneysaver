@@ -1,6 +1,6 @@
 package cz.weissar.moneysaver.ui.base
 
-abstract class ListCallback<T> {
+abstract class BaseListCallback<T> {
 
     abstract fun onLoaded() : MutableList<T>
 

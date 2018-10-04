@@ -1,4 +1,4 @@
-package cz.weissar.moneysaver.db
+package cz.weissar.moneysaver.db.converter
 
 import com.raizlabs.android.dbflow.converter.TypeConverter
 import java.util.*
