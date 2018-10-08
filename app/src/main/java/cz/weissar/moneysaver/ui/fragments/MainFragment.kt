@@ -1,5 +1,6 @@
 package cz.weissar.moneysaver.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -7,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import cz.weissar.moneysaver.R
+import cz.weissar.moneysaver.base.ARG_ITEM_ID
 import cz.weissar.moneysaver.db.dao.ItemEntityDao
 import cz.weissar.moneysaver.db.model.ItemEntity
+import cz.weissar.moneysaver.ui.activities.DetailActivity
 import cz.weissar.moneysaver.ui.base.BaseFragment
 import cz.weissar.moneysaver.ui.base.BaseListCallback
 import kotlinx.android.synthetic.main.fragmenet_main.*
@@ -82,12 +84,15 @@ class MainFragment : BaseFragment() {
             }
 
             override fun onClick(view: View?) {
-                Toast.makeText(context, itemEntities[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
+                var intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra(ARG_ITEM_ID, itemEntities[layoutPosition].id)
+                startActivity(intent)
+                //Toast.makeText(context, itemEntities[layoutPosition].amount.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onLongClick(view: View?): Boolean {
                 ItemEntityDao.deleteAsync(itemEntities.removeAt(layoutPosition))
-                notifyDataSetChanged()
+                notifyItemRemoved(layoutPosition)
                 return true
             }
         }
