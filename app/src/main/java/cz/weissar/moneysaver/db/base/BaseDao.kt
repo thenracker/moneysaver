@@ -2,6 +2,7 @@ package cz.weissar.moneysaver.db.base
 
 import com.raizlabs.android.dbflow.sql.language.Select
 import com.raizlabs.android.dbflow.sql.language.property.Property
+import cz.weissar.moneysaver.db.model.ItemEntity_Table
 import cz.weissar.moneysaver.ui.base.BaseListCallback
 import cz.weissar.moneysaver.ui.base.BaseSingleCallback
 
@@ -22,7 +23,7 @@ abstract class BaseDao<T : BaseDBModel> {
             item.async().delete()
 
     inline fun <reified T : BaseDBModel> selectById(id: Int, property: Property<Int>): T? =
-            Select().from(T::class.java).where(property.eq(id)).querySingle()
+            Select().from(T::class.java).where(property.eq(id)).querySingle() //property.eq(id)
 
     inline fun <reified T : BaseDBModel> selectByIdAsync(id: Int, property: Property<Int>, callback: BaseSingleCallback<T>) =
             callback.handle(Select().from(T::class.java).where(property.eq(id)).async())

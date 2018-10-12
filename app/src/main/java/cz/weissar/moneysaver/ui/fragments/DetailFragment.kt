@@ -6,6 +6,7 @@ import cz.weissar.moneysaver.R
 import cz.weissar.moneysaver.base.ARG_ITEM_ID
 import cz.weissar.moneysaver.db.dao.ItemEntityDao
 import cz.weissar.moneysaver.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment() {
 
@@ -21,20 +22,17 @@ class DetailFragment : BaseFragment() {
 
     private var itemId : Int = 0
 
-    override fun getLayoutResId(): Int = R.layout.fragmenet_main //todo vlastní layout na detail
+    override fun getLayoutResId(): Int = R.layout.fragment_detail
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemId = if (savedInstanceState != null) {
-            savedInstanceState.getInt(ARG_ITEM_ID)
-        } else {
-            arguments!!.getInt(ARG_ITEM_ID)
-        }
+        itemId = savedInstanceState?.getInt(ARG_ITEM_ID) ?: arguments!!.getInt(ARG_ITEM_ID)
 
-        var itemEntity = ItemEntityDao.selectById(id)
+        var itemEntity = ItemEntityDao.selectById(itemId)
 
-        // todo naplnit view - chtělo by to rozjet ModelView !!! - ale to už asi před onCreateView při inflatování?
+        itemNameTextView.text = itemEntity?.name
+        itemCountTextView.text = itemEntity?.amount.toString()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
