@@ -2,7 +2,6 @@ package cz.weissar.moneysaver.db.base
 
 import com.raizlabs.android.dbflow.sql.language.Select
 import com.raizlabs.android.dbflow.sql.language.property.Property
-import cz.weissar.moneysaver.db.model.ItemEntity_Table
 import cz.weissar.moneysaver.ui.base.BaseListCallback
 import cz.weissar.moneysaver.ui.base.BaseSingleCallback
 
