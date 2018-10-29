@@ -1,7 +1,7 @@
 package cz.weissar.moneysaver.ui.activities
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+//import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -26,10 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, presenter.sayHello(), Toast.LENGTH_SHORT).show()
 
+        /*
         val model = ViewModelProviders.of(this).get(MyViewModel::class.java)
         model.getItems().observe(this, Observer<List<ItemEntity>> { items ->
             // updateUI - TODO
         })
+        */
     }
 
 }
