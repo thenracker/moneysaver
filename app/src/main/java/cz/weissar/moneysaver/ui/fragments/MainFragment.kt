@@ -20,6 +20,10 @@ import java.util.*
 
 class MainFragment : BaseFragment() {
 
+    // TODO - spíš než DB flow použít LiveData
+    // TODO - spíš než cokoliv zkusit ViewModel
+    // TODO - zkusit zprovoznit KOIN
+
     companion object { //static methods
         fun newInstance(): MainFragment {
             return MainFragment()
